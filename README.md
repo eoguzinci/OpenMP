@@ -106,5 +106,9 @@ Atomic provides mutual exclusion but only applies to the update of a memory loca
 }
 ```
 
+### Synchronization: barrier
+
+Each thread wait at the barrier until all threads arrive. When all threads arrive the barrier, they are allowed to go on.
+
 ## Parallel Loops
 Is it 
