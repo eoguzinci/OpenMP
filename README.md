@@ -110,5 +110,16 @@ Atomic provides mutual exclusion but only applies to the update of a memory loca
 
 Each thread wait at the barrier until all threads arrive. When all threads arrive the barrier, they are allowed to go on.
 
+```c
+#pragma omp parallel
+{
+  int id = omp_get_thread_num();
+  A[id] = big_cal1(id);
+
+#pragma omp barrier //wait until all the A[id]'s calculated.
+  B[id] = big_cal2(id,A);  
+}
+```
+
 ## Parallel Loops
 Is it 
