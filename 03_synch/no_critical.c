@@ -12,7 +12,7 @@ void main()
     step = 1.0 /(double)num_steps;
     omp_set_num_threads(NUM_THREADS);
     
-    clock_t t = clock();
+    double t = omp_get_wtime();
     #pragma omp parallel
     {
         int i, id, nthrds;
@@ -24,11 +24,10 @@ void main()
             x = (i+0.5)*step;
             sum += 4.0 /(1.0+x*x);
         }
-        #pragma omp critical
         pi += sum * step;    
     }
-    t = clock() - t;
+    t = omp_get_wtime() - t;
 
     printf("%f\n", pi);
-    printf("Clock: %f\n", (double)t);
+    printf("Clock: %f\n", t);
 }

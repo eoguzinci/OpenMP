@@ -93,6 +93,10 @@ float res
 }
 ```
 
+Be sure that not a lot of things happening in the `critical` section because only a single thread can access the critical section at a time and therefore, the CPU time will be multiplied by the number of threads at this section due to serialized processing.
+
+__Note:__ Do not put a `critical` section inside a loop! This will serialize whole loop.
+
 ### Synchronization: atomic
 Atomic provides mutual exclusion but only applies to the update of a memory location (the update of X in the following example)
 ```c
@@ -104,6 +108,15 @@ Atomic provides mutual exclusion but only applies to the update of a memory loca
 #pragma omp atomic
     X += tmp; //atomic only protects the read/update of X
 }
+```
+In essence, `atomic` directive provides a mini-`critical` section. But, the statement inside the `atomic` section must be one of the following forms:
+
+```c
+x binop = expr
+x++;
+++x;
+x--;
+--x;
 ```
 
 ### Synchronization: barrier
