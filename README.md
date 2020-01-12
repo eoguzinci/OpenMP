@@ -44,6 +44,7 @@ int main() {
 * OpenMP is a multi-threading, shared address model. This means that threads communicates by sharing variables.
 
 But,
+
 * Unintended sharing of variables causes race conditions: when the program's outcome changes as the threads are scheduled differently.
 * To avoid race conditions -> use synchronization to protect data conflicts.
 * Synchronization is expensive, therefore, change how data is accessed to minimize the need of synchronization.
@@ -78,6 +79,7 @@ If you promote scalars to an array to support creation of an SPMD program, the a
 
 ### Synchronization: critical
 Mutual exclusion: Only one thread at a time can enter __critical__ region.
+
 ```c
 float res
 #pragma omp parallel
@@ -112,7 +114,7 @@ Atomic provides mutual exclusion but only applies to the update of a memory loca
 In essence, `atomic` directive provides a mini-`critical` section. But, the statement inside the `atomic` section must be one of the following forms:
 
 ```c
-x binop = expr
+x <binary_operation> = expr
 x++;
 ++x;
 x--;
@@ -135,4 +137,5 @@ Each thread wait at the barrier until all threads arrive. When all threads arriv
 ```
 
 ## Parallel Loops
+
 Is it 
