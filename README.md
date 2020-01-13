@@ -19,7 +19,10 @@ Include the OpenMP library if you want to use it.
 ```
 
 To compile a code with omp structures:
-` gcc -o omp_helloc -fopenmp omp_hello.c`
+
+``` 
+gcc -o omp_helloc -fopenmp omp_hello.c
+```
 
 If you haven't specified the number of threads to be used:
 `export OMP_NUM_THREADS=2`
@@ -136,6 +139,57 @@ Each thread wait at the barrier until all threads arrive. When all threads arriv
 }
 ```
 
-## Parallel Loops
+## Parallel Loops (Worksharing)
 
-Is it 
+A parallel construct by itself creates an SPMD or “Single Program Multiple Data” program i.e., each thread redundantly executes the same code. How do you split up pathways through the code between threads within a team? 
+This is called __worksharing__.
+
+Worksharing constructs:
+
+* Loop construct
+* Section construct
+* Single construct
+* Task construct
+
+### Loop construct
+
+Loop construct divides the work equally to the threads. Here is an example code for loop construct.
+
+```c
+#pragma omp parallel
+{
+  #pragma omp for
+  for (int i=0; i<n; i++){
+    NEAT_STUFF(I);
+  }
+}
+```
+
+For example if you want to add to vectors with synchronization:
+
+```c
+#pragma omp parallel
+{ 
+  int id, i, Nthrds, istart, iend;
+  Nthrds = omp_get_num_threads();
+  id = omp_get_thread_num();
+  printf("Num threads: %d\n", Nthrds );
+  istart = id * numElements/Nthrds;
+  iend = (id+1) * numElements/Nthrds;
+  if (id == Nthrds - 1)
+    iend = numElements;
+  for (int i = istart; i < iend; i++){
+    a[i] = a[i] + b[i];
+  }
+}
+```
+
+The same work can be done with parallel loop construct (worksharing):
+```c
+#pragma omp parallel
+#pragma omp for
+for (int i = 0; i < numElements; i++){
+  a[i] = a[i] + b[i];
+}
+```
+
