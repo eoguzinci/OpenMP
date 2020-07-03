@@ -25,8 +25,8 @@ void main()
             sum += 4.0 /(1.0+x*x);
         }
         sum = sum * step;
-    #pragma omp atomic   
-       pi += sum; 
+        #pragma omp atomic   
+        pi += sum; 
     }
     t = omp_get_wtime() - t;
 

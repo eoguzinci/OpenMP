@@ -11,9 +11,9 @@ void main ()
 	
 	unsigned int i; double x, pi, sum = 0.0;
 	step = 1.0/(double) num_steps;
-  double t;
-  t = omp_get_wtime();
-  // SPMD type of program
+  	double t;
+  	t = omp_get_wtime();
+  	// SPMD type of program
 	#pragma omp parallel private(i,x) 
 	{
     #pragma omp for reduction(+:sum)
@@ -25,6 +25,6 @@ void main ()
 	t = omp_get_wtime() - t;
 	pi = sum * step;
 	printf("%f\n", pi);
-  printf("Clock Parallel: %f\n", (double)t);
+  	printf("Clock Parallel: %f\n", (double)t);
 
 }

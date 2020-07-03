@@ -14,8 +14,8 @@ void main ()
 		x = (i+0.5)*step;
 		sum = sum + 4.0/(1.0+x*x);
 	}
-    t = omp_get_wtime() - t;
 	pi = step * sum;
+    t = omp_get_wtime() - t;
 	printf("%f\n", pi);
     printf("Clock Serial: %f\n", t);
 }

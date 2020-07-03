@@ -14,7 +14,7 @@ int main(int argc, char const *argv[])
 		int id, i, Nthrds, istart, iend;
 		Nthrds = omp_get_num_threads();
 		id = omp_get_thread_num();
-		printf("Num threads: %d\n", Nthrds );
+		printf("Thread id: %d\n", id );
 		istart = id * numElements/Nthrds;
 		iend = (id+1) * numElements/Nthrds;
 		if (id == Nthrds - 1)
